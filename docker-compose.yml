@@ -1,19 +1,13 @@
 version: "3"
 
 services:
-  mongodbDB:
-    image: mongo:latest
+  books-api:
+    build: ./
+    environment:
+      - MONGODB_DATABASE='mongodb+srv://vivek_sales_handy:joeyquark@cluster0.7oiq4.mongodb.net/books?authSource=admin&replicaSet=atlas-8lvchi-shard-0&w=majority&readPreference=primary&appname=MongoDB%20Compass&retryWrites=true&ssl=true'
+    volumes:
+      - './:/usr/src/app'
     ports:
-      - 27019:27017
-  # books-api:
-  #   build: ./
-  #   environment:
-  #     - MONGODB_DATABASE='mongodb://mongodbDB:27017/books'
-  #   volumes:
-  #     - './:/usr/src/app'
-  #   ports:
-  #     - 3000:3000
-  #   depends_on:
-  #     - mongodbDB
+      - 3000:3000
 
 

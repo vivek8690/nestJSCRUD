@@ -1,16 +1,23 @@
-import { Body, Controller, Get, Post, Delete, Param, Query, Put } from '@nestjs/common';
+import { Body, Controller, Get, Post, Delete, Param, Query, Put, UseGuards, Res, HttpStatus } from '@nestjs/common';
+import { Response } from 'express';
 import { BooksService } from './books.service';
 import { CreateBookDto } from './dto/create-book.dto';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { Book } from './interfaces/book.interface';
 
+@UseGuards(JwtAuthGuard)
 @Controller('books')
 export class BooksController {
 
     constructor(private readonly booksService: BooksService) { }
 
     @Post()
-    async create(@Body() createBookDto: CreateBookDto) {
+    async create(@Res() res: Response, @Body() createBookDto: CreateBookDto) {
         await this.booksService.create(createBookDto);
+        res.status(HttpStatus.OK).json({
+            sucess: true,
+            message: 'Record created successfully'
+        });
     }
 
     @Get()
