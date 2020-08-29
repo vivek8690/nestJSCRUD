@@ -1,5 +1,5 @@
 import { IsEmail, IsNotEmpty, Validate } from 'class-validator';
-import {CustomPasswordValidator} from '../validators/custom.validator';
+import { CustomPasswordValidator } from '../validators/custom.validator';
 
 export class CreateUserDto {
 

@@ -4,7 +4,7 @@ import { ValidatorConstraint, ValidatorConstraintInterface, ValidationArguments 
 export class CustomPasswordValidator implements ValidatorConstraintInterface {
   validate(text: string, args: ValidationArguments) {
     const regex = new RegExp('^(?=.*[A-Z])((?=.*[0-9])(?=.*[@#$%^&+=]))');
-    return text.length===8 && regex.test(text);
+    return text.length === 8 && regex.test(text);
   }
 
   defaultMessage(args: ValidationArguments) {
