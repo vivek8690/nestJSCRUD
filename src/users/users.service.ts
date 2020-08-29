@@ -19,6 +19,6 @@ export class UsersService {
   }
 
   async findOneByEmail(email): Promise<User> {
-    return this.userModel.findOne({ email: email }).exec();
+    return this.userModel.findOne({ email: email }).lean();
   }
 }
