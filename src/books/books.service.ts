@@ -7,8 +7,8 @@ import { Book } from './interfaces/book.interface';
 export class BooksService {
   constructor(@Inject('BOOK_MODEL') private readonly bookModel: Model<Book>) { }
 
-  async create(createCatDto: CreateBookDto): Promise<Book> {
-    const createdUser = new this.bookModel(createCatDto);
+  async create(createBookDto: CreateBookDto): Promise<Book> {
+    const createdUser = new this.bookModel(createBookDto);
     return createdUser.save();
   }
 
@@ -17,7 +17,18 @@ export class BooksService {
   }
 
   async findOneById(bookId): Promise<Book> {
-    console.log(bookId);
     return this.bookModel.findById(bookId).lean();
+  }
+
+  async findOneAndUpdate(bookId, book): Promise<Book> {
+    const bookObj = await this.bookModel.findById(bookId);
+    Object.keys(book).map((key) => {
+      bookObj[key] = book[key];
+    });
+    return await bookObj.save();
+  }
+
+  async deleteById(bookId): Promise<Book> {
+    return this.bookModel.findByIdAndRemove(bookId).lean();
   }
 }

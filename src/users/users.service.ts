@@ -10,10 +10,10 @@ import { User } from './schemas/user.schema';
 export class UsersService {
   constructor(@InjectModel(User.name) private readonly userModel: Model<User>) { }
 
-  async create(createCatDto: CreateUserDto): Promise<User> {
-    const createdUser = new this.userModel(createCatDto);
+  async create(createUserDto: CreateUserDto): Promise<User> {
+    const createdUser = new this.userModel(createUserDto);
     const salt = await bcryptjs.genSalt(10);
-    createdUser.password = await bcryptjs.hash(createCatDto.password, salt);
+    createdUser.password = await bcryptjs.hash(createUserDto.password, salt);
     return createdUser.save();
   }
 
