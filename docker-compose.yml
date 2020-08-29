@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+  mongodbDB:
+    image: mongo:latest
+    volumes:
+      - '/home:/data/db'
+    ports:
+      - 27018:27017
+  books-api:
+    build: ./
+    environment:
+      - MONGODB_DATABASE='mongodb://mongodbDB:27017/books'
+    volumes:
+      - './:/usr/src/app'
+    ports:
+      - 3000:3000
+    depends_on:
+      - mongodbDB
+
+
