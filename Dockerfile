@@ -1,15 +1,18 @@
 FROM node:latest
 
+# set working directory
 RUN mkdir /usr/src/app
 
-# set working directory
 WORKDIR /usr/src/app
 
-# # install dependencies
+ENV PATH /usr/src/app/node_modules/.bin:$PATH
+
+# # install and cache app dependencies
+ADD package.json /usr/src/app/package.json
+
 RUN npm install
 
-## expose port
 EXPOSE 3000
 
 # start app
-CMD ["npm", "start"]
+CMD ["npm", "run", "start:dev"]

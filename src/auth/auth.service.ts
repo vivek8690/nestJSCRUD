@@ -8,14 +8,16 @@ export class AuthService {
   constructor(
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
-  ) {}
+  ) { }
 
   async validateUser(email: string, pass: string): Promise<any> {
     const user = await this.usersService.findOneByEmail(email);
-    const passMatched = await bcryptjs.compare(pass, user.password);
-    if (user && passMatched ) {
-      const { password, ...result } = user;
-      return result;
+    if (user) {
+      const passMatched = await bcryptjs.compare(pass, user.password);
+      if (passMatched) {
+        const { password, ...result } = user;
+        return result;
+      }
     }
     return null;
   }
